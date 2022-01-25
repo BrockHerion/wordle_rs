@@ -1,5 +1,10 @@
 use colored::*;
-use std::io;
+use rand::Rng;
+use std::{
+	fs::File,
+	io::{prelude::*, stdin, BufReader},
+	path::Path,
+};
 
 const GUESSES_MAX: usize = 6;
 const WORD_LENGTH: usize = 5;
@@ -10,10 +15,10 @@ struct Board {
 }
 
 impl Board {
-	pub fn new(answer: String) -> Self {
+	pub fn new(answer: &String) -> Self {
 		Board {
 			cells: vec!["[ ]".blue().to_string(); GUESSES_MAX * WORD_LENGTH],
-			answer: answer,
+			answer: answer.to_string(),
 		}
 	}
 
@@ -51,9 +56,26 @@ impl Board {
 	}
 }
 
+fn read_words_from_file(filename: impl AsRef<Path>) -> Vec<String> {
+	let file = File::open(filename).expect("File was not found!");
+	let buffer = BufReader::new(file);
+	buffer
+		.lines()
+		.map(|l| l.expect("Could not read line"))
+		.collect()
+}
+
 fn main() {
-	let word = "hello";
-	let mut board = Board::new(String::from(word));
+	let words = read_words_from_file("words.txt");
+
+	let random_num = rand::thread_rng().gen_range(0..words.len());
+
+	let word = words
+		.get(random_num)
+		.expect("An error occurred generating a word")
+		.to_string();
+
+	let mut board = Board::new(&word);
 	let mut num_guesses = 0;
 
 	println!("--- Welcome to Wordle.rs ---");
@@ -63,9 +85,7 @@ fn main() {
 		println!("Please enter a {} letter word: ", WORD_LENGTH);
 
 		let mut guess = String::new();
-		io::stdin()
-			.read_line(&mut guess)
-			.expect("An error occurred!");
+		stdin().read_line(&mut guess).expect("An error occurred!");
 
 		guess = guess.trim().to_string();
 
