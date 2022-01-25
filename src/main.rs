@@ -6,12 +6,14 @@ const WORD_LENGTH: usize = 5;
 
 struct Board {
 	cells: Vec<String>,
+	answer: String,
 }
 
 impl Board {
-	pub fn new() -> Self {
+	pub fn new(answer: String) -> Self {
 		Board {
 			cells: vec!["[ ]".blue().to_string(); GUESSES_MAX * WORD_LENGTH],
+			answer: answer,
 		}
 	}
 
@@ -31,14 +33,27 @@ impl Board {
 		for i in 0..WORD_LENGTH {
 			let cell_index = (WORD_LENGTH * offset) + i;
 			let cell_value = word.chars().nth(i).unwrap();
-			self.cells[cell_index] = format!("[{}]", cell_value);
+
+			self.cells[cell_index] = self.get_cell_value(cell_value, i);
+		}
+	}
+
+	fn get_cell_value(&self, guessed_char: char, index: usize) -> String {
+		let answer_char = self.answer.chars().nth(index).unwrap();
+
+		if answer_char == guessed_char {
+			return format!("[{}]", guessed_char).green().to_string();
+		} else if self.answer.contains(guessed_char) {
+			format!("[{}]", guessed_char).yellow().to_string()
+		} else {
+			format!("[{}]", guessed_char).to_string()
 		}
 	}
 }
 
 fn main() {
 	let word = "hello";
-	let mut board = Board::new();
+	let mut board = Board::new(String::from(word));
 	let mut num_guesses = 0;
 
 	println!("--- Welcome to Wordle.rs ---");
@@ -72,19 +87,24 @@ fn main() {
 
 		board.print();
 
+		num_guesses += 1;
+
 		if guess == word {
-			println!("You guessed the correct word, you win!");
+			println!(
+				"You guessed the correct word in {} turns, you win!",
+				num_guesses
+			);
 			break;
 		}
 
-		num_guesses += 1;
-
 		println!("You have guessed {}/{} times", num_guesses, GUESSES_MAX);
 		if num_guesses == GUESSES_MAX {
-			println!("You did not guess the word. Game over!\n");
+			println!("You did not guess the word. Your word was {}", word.red());
 			break;
 		}
 
 		println!("Your guess was incorrect, please try again\n");
 	}
+
+	println!("Game over!")
 }
