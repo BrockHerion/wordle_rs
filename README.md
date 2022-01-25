@@ -15,21 +15,21 @@ Welcome to Wordle.rs! This is a command line port of the game [Wordle](https://w
   - Yellow for correct letter, but incorrect placement
   - Green for correct letter and placement
 
+### Things Still to Add/Fix
+
+- [ ] Add validation on if a guess is an actual word or a bunch of random letters
+- [ ] Let users choose number of guesses and/or word length
+- [ ] Cleanup main game logic
+
 ## Setup
 
 To run Wordle.rs, the first thing you'll want to do is clone the repository and run `cargo build` to install the necessary dependencies. Then, you can use `cargo run` or `./target/debug/wordle_rs` to play!
 
 *Note: you do need to have the Rust compiler installed to run this*
 
-## Things Still to Add/Fix
-
-- [ ] Add validation on if a guess is an actual word or a bunch of random letters
-- [ ] Let users choose number of guesses and/or word length
-- [ ] Cleanup main game logic
-
 ---
 
-## Support
+### Support
 
 If you think this project is neat and wanna see more, feel free to drop a follow on Twitter or GitHub. You can also buy me a coffee if you're feeling like fueling my coding/caffeine addiction!
 
