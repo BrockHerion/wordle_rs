@@ -23,6 +23,7 @@ Welcome to Wordle.rs! This is a command line port of the game [Wordle](https://w
 - [ ] Handle upper vs lower case
 - [ ] Handle any weird character input
 - [ ] Scores/streaks for players
+- [ ] Display incorrect letter guesses
 
 ## Setup
 
