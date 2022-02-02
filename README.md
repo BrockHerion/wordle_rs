@@ -19,8 +19,8 @@ Welcome to Wordle.rs! This is a command line port of the game [Wordle](https://w
 
 - [ ] Add validation on if a guess is an actual word or a bunch of random letters
 - [ ] Let users choose number of guesses and/or word length
-- [ ] Cleanup main game logic
-- [ ] Handle upper vs lower case
+- [x] Cleanup main game logic
+- [x] Handle upper vs lower case
 - [ ] Handle any weird character input
 - [ ] Scores/streaks for players
 - [ ] Display incorrect letter guesses
