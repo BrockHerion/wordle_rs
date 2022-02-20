@@ -27,7 +27,7 @@ pub fn find_word(word: &String) -> Option<usize> {
 			low = middle + 1;
 		}
 
-		if low <= high {
+		if low >= high {
 			break;
 		}
 	}
