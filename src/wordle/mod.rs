@@ -1,4 +1,4 @@
 pub mod board;
 pub mod game;
 pub mod gameplay;
-pub mod utils;
+pub mod words;

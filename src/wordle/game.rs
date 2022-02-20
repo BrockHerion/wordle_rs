@@ -1,19 +1,17 @@
 use crate::wordle::board;
 use crate::wordle::gameplay;
-use crate::wordle::utils;
+use crate::wordle::words;
 
 const GUESSES_MAX: usize = 6;
 const WORD_LENGTH: usize = 5;
 
 pub struct Game {
-	words: Vec<String>,
 	board: board::Board,
 }
 
 impl Game {
 	pub fn new() -> Self {
 		Game {
-			words: utils::read_words_from_file("words.txt"),
 			board: board::Board::new(GUESSES_MAX, WORD_LENGTH),
 		}
 	}
@@ -23,7 +21,6 @@ impl Game {
 		self.run();
 		self.finish();
 	}
-
 	fn initialize(&self) {
 		println!("--- Welcome to Wordle.rs ---");
 		self.board.print();
@@ -31,10 +28,10 @@ impl Game {
 
 	fn run(&mut self) {
 		let mut num_guesses = 0;
-		let answer = utils::get_random_word(&self.words);
+		let answer = words::get_random_word();
 
 		while num_guesses < GUESSES_MAX {
-			let guess = match gameplay::get_player_guess(WORD_LENGTH) {
+			let guess = match gameplay::get_and_validate_player_guess(WORD_LENGTH) {
 				Ok(v) => v,
 				Err(e) => {
 					println!("{}", e);
