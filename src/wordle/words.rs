@@ -13,7 +13,7 @@ pub fn find_word(word: &String) -> Option<usize> {
 	let mut low = 0;
 	let mut high = WORDS.len() - 1;
 
-	while low <= high {
+	loop {
 		let middle = low + (high - low) / 2;
 
 		let res = word.cmp(&WORDS[middle].to_string());
@@ -25,6 +25,10 @@ pub fn find_word(word: &String) -> Option<usize> {
 			high = middle - 1;
 		} else {
 			low = middle + 1;
+		}
+
+		if low <= high {
+			break;
 		}
 	}
 	None
